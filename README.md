@@ -12,16 +12,109 @@
 # Instalasi
 [`^ kembali ke atas ^`](#)
 
-#### Kebutuhan Sistem :
-- PHP 7.1+
+### Kebutuhan Sistem :
+- PHP 7.2+
 - Git
 - Apache Web server 1.3+.
 - MySQL 5.0+.
 - Composer
 - Unix, Linux atau Windows.
+- PhpMyAdmin
 
-#### Proses Instalasi :
+### Proses Instalasi :
+1. Login kedalam server menggunakan SSH. Untuk pengguna windows bisa menggunakan aplikasi [PuTTY](http://www.putty.org/).
+```
+Gatau ini apa lupa
+```
 
+2. Install seluruh kebutuhan seperti Composer, Git
+```
+sudo apt update
+sudo apt install composer
+sudo apt install git
+```
+
+3. Install kebutuhan Web Server seperti `Apache`, `PHP`, `PhpMyAdmin`, dan `MySQL`
+```
+sudo apt install apache2
+sudo apt install mysql-server
+sudo mysql_secure_installation
+sudo apt install php libapache2-mod-php php-mysql
+sudo apt-get install php php-common php-xml php-cli php-curl php-json php-mysqlnd php7.2-sqlite php-soap php-mbstring php-zip php-bcmath
+sudo apt install phpmyadmin
+```
+
+4. Set Up database yang digunakan `MySQL`
+```
+sudo mysql -p -u root
+  CREATE DATABASE dreamfactory;
+  CREATE USER 'dreamfactoryuser'@'localhost' IDENTIFIED BY 'dreamfactorypass';
+  GRANT ALL PRIVILEGES ON `dreamfactory`.* TO 'dreamfactoryuser'@'localhost';
+  FLUSH PRIVILEGES;
+  exit;
+sudo service apache2 reload
+```
+5. Konfigurasi PHP.ini
+```
+sudo nano ~/etc/php/7.2/apache2/php.ini
+```
+- Find the line that reads ;cgi.fix_pathinfo=1
+- Change it to read cgi.fix_pathinfo=0
+- Save and exit (Ctrl+x, Y, <Enter>)
+
+5. Install MongoDB Extension
+```
+sudo apt-get install php-dev php-pear build-essential libssl-dev libssl-dev libcurl4-openssl-dev pkg-config
+sudo pecl install mongodb
+sudo sh -c 'echo "extension=mongodb.so" > /etc/php/7.2/mods-available/mongodb.ini'
+sudo phpenmod mongodb
+```
+
+6. Set Up project
+```
+sudo mkdir /opt/dreamfactory
+sudo chown -R $USER /opt/dreamfactory
+cd /opt/dreamfactory
+git clone https://github.com/dreamfactorysoftware/dreamfactory.git ./
+composer install --no-dev --ignore-platform-reqs
+php artisan df:env
+nano .env
+php artisan df:setup
+sudo chown -R www-data:$USER storage/ bootstrap/cache/
+sudo chmod -R 2775 storage/ bootstrap/cache/
+php artisan cache:clear
+```
+
+7. Set Up Web Server
+```
+sudo a2enmod rewrite
+cd /etc/apache2/sites-available
+sudo cp 000-default.conf 000-default.conf.bak
+sudo nano 000-default.conf
+
+<VirtualHost *:80>
+    DocumentRoot /opt/dreamfactory/public
+
+    <Directory /opt/dreamfactory/public>
+        AddOutputFilterByType DEFLATE text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript
+        Options -Indexes +FollowSymLinks -MultiViews
+        AllowOverride All
+        AllowOverride None
+        Require all granted
+        RewriteEngine on
+        RewriteBase /
+        RewriteCond %{REQUEST_FILENAME} !-f
+        RewriteCond %{REQUEST_FILENAME} !-d
+        RewriteRule ^.*$ /index.php [L]
+
+        <LimitExcept GET HEAD PUT DELETE PATCH POST>
+            Allow from all
+        </LimitExcept>
+    </Directory>
+</VirtualHost>
+
+sudo service apache2 restart
+```
 
 # Konfigurasi
 [`^ kembali ke atas ^`](#)
