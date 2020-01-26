@@ -76,17 +76,14 @@ $ sudo apt install phpmyadmin
     ```
     $ sudo apt-get install php-dev php-pear build-essential libssl-dev libssl-dev libcurl4-openssl-dev pkg-config
     ```
-
     - Install dari PECL
     ```
     $ sudo pecl install mongodb
     ```
-
     - Buat .ini file
     ```
     $ sudo sh -c 'echo "extension=mongodb.so" > /etc/php/7.2/mods-available/mongodb.ini'
     ```
-
     - Nyalakan MongoDB Extension
     ```
     $ sudo phpenmod mongodb
@@ -98,41 +95,34 @@ $ sudo apt install phpmyadmin
     $ sudo mkdir /opt/dreamfactory
     $ sudo chown -R $USER /opt/dreamfactory  
     ```
-
     - Pindah ke dalam direktori yang telah dibuat dan lakukan git clone dari repository **Dreamfactory**
     ```
     $ cd /opt/dreamfactory
     $ git clone https://github.com/dreamfactorysoftware/dreamfactory.git ./
     ```
-
     - Karena **Dreamfactory** menggunakan package dari composer, maka kita harus melakukan instalasi composer
     ```
     $ composer install --no-dev --ignore-platform-reqs
     ```
-
     - Setup database
     ```
     $ php artisan df:env
     ```
-
     - Ubah pengaturan di dalam file .env
     ```
     $ nano .env
     ```
-
     - Hilangkan comment di `##DB_CHARSET=utf8` dan `##DB_COLLATION=utf8_unicode_ci` dengan cara menghapus bagian `##`, lalu save dan exit (Ctrl+x,Y,<Enter>)
-
+    
     - Setup project
     ```
     php artisan df:setup
     ```
-
     - Ubah *permissions* di direktori `storage` dan `cache`
     ```
     $ sudo chown -R www-data:$USER storage/ bootstrap/cache/
     $ sudo chmod -R 2775 storage/ bootstrap/cache/
     ```
-
     - Hapus *cache* aplikasi agar project menggunakan konfigurasi yang baru dibuat
     ```
     php artisan cache:clear 
@@ -143,18 +133,15 @@ $ sudo apt install phpmyadmin
     ```
     sudo a2enmod rewrite
     ```
-
     - Pindah ke direktori konfigurasi dan backup default konfigurasi
     ```
     cd /etc/apache2/sites-available
     sudo cp 000-default.conf 000-default.conf.bak
     ```
-
     - Ubah *default config* dengan text editor
     ```
     sudo nano 000-default.conf
     ```
-
     - Sehingga `000-default.conf` menjadi seperti
     ```
     <VirtualHost *:80>
@@ -178,7 +165,6 @@ $ sudo apt install phpmyadmin
         </Directory>
     </VirtualHost>
     ```
-
     - Restart service apache2
     ```
     sudo service apache2 restart
