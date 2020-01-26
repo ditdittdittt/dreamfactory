@@ -6,7 +6,7 @@
 # Sekilas Tentang
 [`^ kembali ke atas ^`](#)
 
-**Dreamfactory** adalah sebuah aplikasi berbasis website yang menyediakan layanan API Management secara gratis dan *Open Source*. **Dreamfactory** memberikan kemudahan untuk melakukan pengembangkan aplikasi dengan memberikan solusi untuk melakukan manajemen *user*, *services*, dan *data* melalui REST API. **Dreamfactory** sudah bekerja dengan XML-RPC di tahun 1998, SOAP di tahun 2002, REST dan JSON di tahun 2004.
+**Dreamfactory** adalah sebuah aplikasi berbasis website yang menyediakan layanan API Management secara gratis dan *Open Source*. **Dreamfactory** memberikan kemudahan untuk melakukan pengembangan aplikasi dengan memberikan solusi untuk melakukan manajemen *user*, *services*, dan *data* melalui REST API. **Dreamfactory** sudah bekerja dengan XML-RPC di tahun 1998, SOAP di tahun 2002, REST dan JSON di tahun 2004.
 
 
 # Instalasi
@@ -29,48 +29,68 @@ Gatau ini apa lupa
 
 2. Install seluruh kebutuhan seperti Composer, Git
 ```
-sudo apt update
-sudo apt install composer
-sudo apt install git
+$ sudo apt update
+$ sudo apt install composer
+$ sudo apt install git
 ```
 
 3. Install kebutuhan Web Server seperti `Apache`, `PHP`, `PhpMyAdmin`, dan `MySQL`
 ```
-sudo apt install apache2
-sudo apt install mysql-server
-sudo mysql_secure_installation
-sudo apt install php libapache2-mod-php php-mysql
-sudo apt-get install php php-common php-xml php-cli php-curl php-json php-mysqlnd php7.2-sqlite php-soap php-mbstring php-zip php-bcmath
-sudo apt install phpmyadmin
+$ sudo apt install apache2
+$ sudo apt install mysql-server
+$ sudo mysql_secure_installation
+$ sudo apt install php libapache2-mod-php php-mysql
+$ sudo apt-get install php php-common php-xml php-cli php-curl php-json php-mysqlnd php7.2-sqlite php-soap php-mbstring php-zip php-bcmath
+$ sudo apt install phpmyadmin
 ```
 
 4. Set Up database yang digunakan `MySQL`
-```
-sudo mysql -p -u root
+
+  1. Masuk menggunakan root
+  ```
+  $ sudo mysql -p -u root
+  ```
+  2. Buat database dan user yang akan digunakan
+  ```
   CREATE DATABASE dreamfactory;
   CREATE USER 'dreamfactoryuser'@'localhost' IDENTIFIED BY 'dreamfactorypass';
   GRANT ALL PRIVILEGES ON `dreamfactory`.* TO 'dreamfactoryuser'@'localhost';
   FLUSH PRIVILEGES;
   exit;
-sudo service apache2 reload
-```
+  ```
+  3. Restart service apache2
+  ```
+  $ sudo service apache2 reload
+  ```
+
 5. Konfigurasi PHP.ini
 ```
-sudo nano ~/etc/php/7.2/apache2/php.ini
+$ sudo nano ~/etc/php/7.2/apache2/php.ini
 ```
-- Find the line that reads ;cgi.fix_pathinfo=1
-- Change it to read cgi.fix_pathinfo=0
+- Cari line yang menunjukkan ;cgi.fix_pathinfo=1
+- Ubah menjadi cgi.fix_pathinfo=0
 - Save and exit (Ctrl+x, Y, <Enter>)
 
-5. Install MongoDB Extension
-```
-sudo apt-get install php-dev php-pear build-essential libssl-dev libssl-dev libcurl4-openssl-dev pkg-config
-sudo pecl install mongodb
-sudo sh -c 'echo "extension=mongodb.so" > /etc/php/7.2/mods-available/mongodb.ini'
-sudo phpenmod mongodb
-```
+6. Install MongoDB Extension
 
-6. Set Up project
+  1. Memastikan semua package lengkap
+  ```
+  $ sudo apt-get install php-dev php-pear build-essential libssl-dev libssl-dev libcurl4-openssl-dev pkg-config
+  ```
+  2. Install dari PECL
+  ```
+  $ sudo pecl install mongodb
+  ```
+  3. Buat .ini file
+  ```
+  $ sudo sh -c 'echo "extension=mongodb.so" > /etc/php/7.2/mods-available/mongodb.ini'
+  ```
+  4. Nyalakan MongoDB Extension
+  ```
+  $ sudo phpenmod mongodb
+  ```
+
+7. Set Up project
 ```
 sudo mkdir /opt/dreamfactory
 sudo chown -R $USER /opt/dreamfactory
@@ -85,7 +105,7 @@ sudo chmod -R 2775 storage/ bootstrap/cache/
 php artisan cache:clear
 ```
 
-7. Set Up Web Server
+8. Set Up Web Server
 ```
 sudo a2enmod rewrite
 cd /etc/apache2/sites-available
@@ -133,3 +153,6 @@ sudo service apache2 restart
 
 # Referensi
 [`^ kembali ke atas ^`](#)
+- [Dreamfactory](https://www.dreamfactory.com/) - Dreamfactory
+- [Dreamfactory Wiki](https://wiki.dreamfactory.com/Main_Page) - Dreamfactory Wiki
+- [How to setup LAMP](https://medium.com/@oreillyalan88/lamp-linux-apache-mysql-php-web-server-on-an-amazon-ec2-linux-instance-e37eb023e996) - Medium
