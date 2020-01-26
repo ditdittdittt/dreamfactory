@@ -177,19 +177,14 @@ $ sudo apt install phpmyadmin
 
 # Konfigurasi
 [`^ kembali ke atas ^`](#)
-
     - Untuk melihat info dari sistem yang kita gunakan kita bisa membuka halaman *System Info* yang ada di tab *Config*
     ![1](https://raw.githubusercontent.com/ditdittdittt/dreamfactory/master/Screenshot/Config%20System%20Info.png)
-
     - Untuk melakukan pengaturan pada *cache* guna meningkatkan performa, kita bisa membuka halaman *cache* yang ada di tab *Config*
     ![2](https://raw.githubusercontent.com/ditdittdittt/dreamfactory/master/Screenshot/Config%20Cache.png)
-
     - **Dreamfactory** juga sudah menyediakan kemudahan untuk melakukan pengaturan **CORS** di halaman *CORS* yang ada di tab *Config*
     ![3](https://raw.githubusercontent.com/ditdittdittt/dreamfactory/master/Screenshot/Config%20CORS.png)
-
     - Sedangkan untuk melakukan konfigurasi template dari email yang akan dikirim, kita bisa melakukannya di halaman *Email Templates* yang ada di tab *Config*
     ![4](https://raw.githubusercontent.com/ditdittdittt/dreamfactory/master/Screenshot/Config%20Email%20Templates.png)
-
     - Sedangkan untuk membuat konfigurasi *environment* yang digunakan, kita bisa mengaksesnya di halaman *Global Lookup Keys*
     ![5](https://raw.githubusercontent.com/ditdittdittt/dreamfactory/master/Screenshot/Config%20Global%20Keys.png)
 
