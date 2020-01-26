@@ -169,7 +169,11 @@ $ sudo apt install phpmyadmin
     ```
     sudo service apache2 restart
     ```
-9. Kunjungi alamat IP Web Server kita untuk melakukan login
+9. Kunjungi alamat IP Web Server kita untuk melakukan login menggunakan akun saat setup
+    - Login dengan akun yang sudah dibuat
+    ![1](https://raw.githubusercontent.com/ditdittdittt/dreamfactory/master/Screenshot/Login%20Page.png)
+    - Siap digunakan
+    ![2](https://raw.githubusercontent.com/ditdittdittt/dreamfactory/master/Screenshot/Home%20Page.png)
 
 # Konfigurasi
 [`^ kembali ke atas ^`](#)
@@ -191,3 +195,4 @@ $ sudo apt install phpmyadmin
 - [Dreamfactory](https://www.dreamfactory.com/) - Dreamfactory
 - [Dreamfactory Wiki](https://wiki.dreamfactory.com/Main_Page) - Dreamfactory Wiki
 - [How to setup LAMP](https://medium.com/@oreillyalan88/lamp-linux-apache-mysql-php-web-server-on-an-amazon-ec2-linux-instance-e37eb023e996) - Medium
+
