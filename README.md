@@ -189,12 +189,18 @@ $ sudo apt install phpmyadmin
 - Sedangkan untuk membuat konfigurasi *environment* yang digunakan, kita bisa mengaksesnya di halaman *Global Lookup Keys*
     ![5](https://raw.githubusercontent.com/ditdittdittt/dreamfactory/master/Screenshot/Config%20Global%20Keys.png)
 
-
-# Maintenance
-[`^ kembali ke atas ^`](#)
-
 # Otomatisasi
 [`^ kembali ke atas ^`](#)
+- Cara pertama menggunakan bitnami, **Dreamfactory** sudah menyediakan installer untuk memudahkan para user melakukan instalasi dream factory. Cukup download installer **Dreamfactory** dari [bitnami](https://bitnami.com/stack/dreamfactory/installer) sesuai dengan OS yang digunakan. Lalu install menggunakan installer yang telah di-download
+![1](https://raw.githubusercontent.com/ditdittdittt/dreamfactory/master/Screenshot/Bitnami.png)
+
+- Cara kedua menggunakan salah satu penyedia Hosting yaitu **Heroku**, cukup dengan memiliki akun **Heroku**, kita bisa melakukan hosting otomatis dengan melakukan sedikit konfigurasi
+<p align="center">
+<a href="https://heroku.com/deploy?template=https://github.com/dreamfactorysoftware/dreamfactory">
+  <img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy">
+</a>
+</p>
+![2](https://raw.githubusercontent.com/ditdittdittt/dreamfactory/master/Screenshot/Heroku.png)
 
 # Cara Pemakaian
 [`^ kembali ke atas ^`](#)
