@@ -44,97 +44,146 @@ $ sudo apt-get install php php-common php-xml php-cli php-curl php-json php-mysq
 $ sudo apt install phpmyadmin
 ```
 
-4. Set Up database yang digunakan `MySQL`
-
-  1. Masuk menggunakan root
-  ```
-  $ sudo mysql -p -u root
-  ```
-  2. Buat database dan user yang akan digunakan
-  ```
-  CREATE DATABASE dreamfactory;
-  CREATE USER 'dreamfactoryuser'@'localhost' IDENTIFIED BY 'dreamfactorypass';
-  GRANT ALL PRIVILEGES ON `dreamfactory`.* TO 'dreamfactoryuser'@'localhost';
-  FLUSH PRIVILEGES;
-  exit;
-  ```
-  3. Restart service apache2
-  ```
-  $ sudo service apache2 reload
-  ```
+4. Setup database yang digunakan `MySQL`
+    - Masuk menggunakan root
+    ```
+    $ sudo mysql -p -u root
+    ```
+    - Buat database dan user yang akan digunakan
+    ```
+    CREATE DATABASE dreamfactory;
+    CREATE USER 'dreamfactoryuser'@'localhost' IDENTIFIED BY 'dreamfactorypass';
+    GRANT ALL PRIVILEGES ON `dreamfactory`.* TO 'dreamfactoryuser'@'localhost';
+    FLUSH PRIVILEGES;
+    exit;
+    ```
+    - Restart service apache2
+    ```
+    $ sudo service apache2 reload
+    ```
 
 5. Konfigurasi PHP.ini
-```
-$ sudo nano ~/etc/php/7.2/apache2/php.ini
-```
-- Cari line yang menunjukkan ;cgi.fix_pathinfo=1
-- Ubah menjadi cgi.fix_pathinfo=0
-- Save and exit (Ctrl+x, Y, <Enter>)
+    - Buka php.ini dengan text editor
+    ```
+    $ sudo nano ~/etc/php/7.2/apache2/php.ini
+    ```
+    - Cari line yang menunjukkan `;cgi.fix_pathinfo=1`
+    - Ubah menjadi `cgi.fix_pathinfo=0`
+    - Save dan exit (Ctrl+x, Y, <Enter>)
 
 6. Install MongoDB Extension
+    - Memastikan semua package lengkap
+    ```
+    $ sudo apt-get install php-dev php-pear build-essential libssl-dev libssl-dev libcurl4-openssl-dev pkg-config
+    ```
 
-  1. Memastikan semua package lengkap
-  ```
-  $ sudo apt-get install php-dev php-pear build-essential libssl-dev libssl-dev libcurl4-openssl-dev pkg-config
-  ```
-  2. Install dari PECL
-  ```
-  $ sudo pecl install mongodb
-  ```
-  3. Buat .ini file
-  ```
-  $ sudo sh -c 'echo "extension=mongodb.so" > /etc/php/7.2/mods-available/mongodb.ini'
-  ```
-  4. Nyalakan MongoDB Extension
-  ```
-  $ sudo phpenmod mongodb
-  ```
+    - Install dari PECL
+    ```
+    $ sudo pecl install mongodb
+    ```
 
-7. Set Up project
-```
-sudo mkdir /opt/dreamfactory
-sudo chown -R $USER /opt/dreamfactory
-cd /opt/dreamfactory
-git clone https://github.com/dreamfactorysoftware/dreamfactory.git ./
-composer install --no-dev --ignore-platform-reqs
-php artisan df:env
-nano .env
-php artisan df:setup
-sudo chown -R www-data:$USER storage/ bootstrap/cache/
-sudo chmod -R 2775 storage/ bootstrap/cache/
-php artisan cache:clear
-```
+    - Buat .ini file
+    ```
+    $ sudo sh -c 'echo "extension=mongodb.so" > /etc/php/7.2/mods-available/mongodb.ini'
+    ```
+
+    - Nyalakan MongoDB Extension
+    ```
+    $ sudo phpenmod mongodb
+    ```
+
+7. Setup project
+    - Buat direktori instalasi dan jadikan user sebagai pemilik direktori tersebut.
+    ```
+    $ sudo mkdir /opt/dreamfactory
+    $ sudo chown -R $USER /opt/dreamfactory  
+    ```
+
+    - Pindah ke dalam direktori yang telah dibuat dan lakukan git clone dari repository **Dreamfactory**
+    ```
+    $ cd /opt/dreamfactory
+    $ git clone https://github.com/dreamfactorysoftware/dreamfactory.git ./
+    ```
+
+    - Karena **Dreamfactory** menggunakan package dari composer, maka kita harus melakukan instalasi composer
+    ```
+    $ composer install --no-dev --ignore-platform-reqs
+    ```
+
+    - Setup database
+    ```
+    $ php artisan df:env
+    ```
+
+    - Ubah pengaturan di dalam file .env
+    ```
+    $ nano .env
+    ```
+
+    - Hilangkan comment di `##DB_CHARSET=utf8` dan `##DB_COLLATION=utf8_unicode_ci` dengan cara menghapus bagian `##`, lalu save dan exit (Ctrl+x,Y,<Enter>)
+
+    - Setup project
+    ```
+    php artisan df:setup
+    ```
+
+    - Ubah *permissions* di direktori `storage` dan `cache`
+    ```
+    $ sudo chown -R www-data:$USER storage/ bootstrap/cache/
+    $ sudo chmod -R 2775 storage/ bootstrap/cache/
+    ```
+
+    - Hapus *cache* aplikasi agar project menggunakan konfigurasi yang baru dibuat
+    ```
+    php artisan cache:clear 
+    ```
 
 8. Set Up Web Server
-```
-sudo a2enmod rewrite
-cd /etc/apache2/sites-available
-sudo cp 000-default.conf 000-default.conf.bak
-sudo nano 000-default.conf
+    - Nyalakan *Rewrite Engine*
+    ```
+    sudo a2enmod rewrite
+    ```
 
-<VirtualHost *:80>
-    DocumentRoot /opt/dreamfactory/public
+    - Pindah ke direktori konfigurasi dan backup default konfigurasi
+    ```
+    cd /etc/apache2/sites-available
+    sudo cp 000-default.conf 000-default.conf.bak
+    ```
 
-    <Directory /opt/dreamfactory/public>
-        AddOutputFilterByType DEFLATE text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript
-        Options -Indexes +FollowSymLinks -MultiViews
-        AllowOverride All
-        AllowOverride None
-        Require all granted
-        RewriteEngine on
-        RewriteBase /
-        RewriteCond %{REQUEST_FILENAME} !-f
-        RewriteCond %{REQUEST_FILENAME} !-d
-        RewriteRule ^.*$ /index.php [L]
+    - Ubah *default config* dengan text editor
+    ```
+    sudo nano 000-default.conf
+    ```
 
-        <LimitExcept GET HEAD PUT DELETE PATCH POST>
-            Allow from all
-        </LimitExcept>
-    </Directory>
-</VirtualHost>
+    - Sehingga `000-default.conf` menjadi seperti
+    ```
+    <VirtualHost *:80>
+        DocumentRoot /opt/dreamfactory/public
 
-sudo service apache2 restart
-```
+        <Directory /opt/dreamfactory/public>
+            AddOutputFilterByType DEFLATE text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript
+            Options -Indexes +FollowSymLinks -MultiViews
+            AllowOverride All
+            AllowOverride None
+            Require all granted
+            RewriteEngine on
+            RewriteBase /
+            RewriteCond %{REQUEST_FILENAME} !-f
+            RewriteCond %{REQUEST_FILENAME} !-d
+            RewriteRule ^.*$ /index.php [L]
+
+            <LimitExcept GET HEAD PUT DELETE PATCH POST>
+                Allow from all
+            </LimitExcept>
+        </Directory>
+    </VirtualHost>
+    ```
+
+    - Restart service apache2
+    ```
+    sudo service apache2 restart
+    ```
+9. Kunjungi alamat IP Web Server kita untuk melakukan login
 
 # Konfigurasi
 [`^ kembali ke atas ^`](#)
