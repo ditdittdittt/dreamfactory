@@ -24,7 +24,7 @@
 ### Proses Instalasi :
 1. Login kedalam server menggunakan SSH. Untuk pengguna windows bisa menggunakan aplikasi [PuTTY](http://www.putty.org/).
 ```
-Gatau ini apa lupa
+ssh student@localhost -p 2200
 ```
 
 2. Install seluruh kebutuhan seperti Composer, Git
