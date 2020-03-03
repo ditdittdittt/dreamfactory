@@ -32,6 +32,7 @@ ssh student@localhost -p 2200
 $ sudo apt update
 $ sudo apt install composer
 $ sudo apt install git
+$ sudo apt install zip
 ```
 
 3. Install kebutuhan Web Server seperti `Apache`, `PHP`, `PhpMyAdmin`, dan `MySQL`
