@@ -204,9 +204,33 @@ $ sudo apt install phpmyadmin
 
 # Cara Pemakaian
 [`^ kembali ke atas ^`](#)
+- Untuk melakukan management menggunakan **Dreamfactory** cukup mudah, berikuat merupakan beberapa contoh:
+    - Membuat dokumentasi untuk aplikasi yang kita miliki
+        ![1](https://raw.githubusercontent.com/ditdittdittt/dreamfactory/master/Screenshot/Create%20App.png)
+    - Membuat admin baru untuk melakukan manajemen
+        ![2](https://raw.githubusercontent.com/ditdittdittt/dreamfactory/master/Screenshot/Create%20Admin.png)
+    - Membuat service baru yang ada di dalam aplikasi
+        ![3](https://raw.githubusercontent.com/ditdittdittt/dreamfactory/master/Screenshot/Create%20Service.png)
 
 # Pembahasan
 [`^ kembali ke atas ^`](#)
+**Dreamfactory** adalah sebuah aplikasi berbasis website yang menyediakan layanan API Management yang ditulis dalam bahasa pemrograman PHP. Beberapa hal yang bisa dilakukan untuk melakukan manajemen dengan **Dreamfactory** diantaranya:
+- Mempermudah apps management apabila kita memiliki sebuah aplikasi yang banyak
+- Mempermudah service management disaat sebuah aplikasi menggunakan berbagai macam layanan service
+- Membuat role management kepada setiap user, sehingga setiap user memiliki hak akses yang sesuai dengan role-nya
+- Membuat dokumentasi *Api* dengan sangat mudah, bahkan kita bisa membuat *schema* dari database
+- Memiliki file manager tersendiri
+
+Kekurangan dari aplikasi ini antara lain:
+- Ketika memiliki resource yang banyak, aplikasi akan berjalan dengan lambat
+- Sebagian *powerful feature* yang disediakan harus diakses dengan berbayar
+
+Namun, jika dibandingkan dengan aplikasi *API Management* lainnya seperti **Endpoint** atau **Fusio**, aplikasi ini memiliki beberapa kelebihan dan kekurangan seperti:
+- **Dreamfactory** lebih *less-coding* dibanding **Endpoint** maupun **Fusio**
+- Aplikasi **Dreamfactory** memiliki fitur yang jauh lebih lengkap
+- Aplikasi **Endpoint** dan **Fusio** lebih ringan dibanding **Dreamfactory** karena memiliki modul yang lebih sedikit
+
+
 
 # Referensi
 [`^ kembali ke atas ^`](#)
